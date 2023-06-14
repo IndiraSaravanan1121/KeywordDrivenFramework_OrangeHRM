@@ -14,10 +14,10 @@ public class ExcelReader {
 	XSSFSheet sheet;
 	
 	String columnLocatorName;
-	String locatorName;
-	String locatorValue;
+	static String locatorName;
+	static String locatorValue;
 	String keywordColumnName;
-	String dataColumnName;	
+	public static String dataColumnName;	
 	int totalRowNum;
 
 	/**
@@ -54,7 +54,7 @@ public class ExcelReader {
 		}
 		keywordColumnName = sheet.getRow(row).getCell(keywordColumn).toString().trim();
 		dataColumnName = sheet.getRow(row).getCell(valueColumn).toString().trim();
-		return dataColumnName;
+		return keywordColumnName;
 	}
 
 }
