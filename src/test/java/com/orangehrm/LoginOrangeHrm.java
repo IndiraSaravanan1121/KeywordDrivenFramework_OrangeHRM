@@ -1,12 +1,13 @@
 package com.orangehrm;
 
-import org.openqa.selenium.By;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import org.testng.Assert;
 
 import com.orangehrm.constants.Constants;
 import com.orangehrm.utilities.ExcelReader;
@@ -17,11 +18,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class LoginOrangeHrm {
 	
 	WebDriver driver;
+	Logger logger;
 	
 	/**
 	 * This Method is to open chrome browser
 	 */
 	public void openBrowser() {
+		
+		logger =  LogManager.getLogger(this.getClass());
 		
 		switch(ExcelReader.dataColumnName) {
 		case Constants.CHROME:
@@ -33,7 +37,9 @@ public class LoginOrangeHrm {
 			driver = new EdgeDriver();
 			break;
 		}
+		logger.info("Browser opened");
 		driver.manage().window().maximize();
+		logger.info("Maximized window");
 	}
 	
 	/**
@@ -42,6 +48,7 @@ public class LoginOrangeHrm {
 	 */
 	public void goToURL() {
 		driver.get(ExcelReader.dataColumnName);
+		logger.info("url launched");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -60,19 +67,33 @@ public class LoginOrangeHrm {
 		}
 		WebElement text = driver.findElement(KeywordDriven.findLocators());
 		text.sendKeys(ExcelReader.dataColumnName);
+		logger.info(ExcelReader.dataColumnName + " sendkeys is done");
 	}
 	
 	/**
 	 * This Method is to click login button
+	 * @throws Exception 
 	 */
-	public void click() {
+	public void click() throws Exception {
+		Thread.sleep(2000);
+		WebElement clickBtn = driver.findElement(KeywordDriven.findLocators());
+		clickBtn.click();
+		Thread.sleep(2000);
+		logger.info("Clicking is done");
+	}
+	
+	/**
+	 * This Method is to perform assertion
+	 */
+	public void validation() {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		WebElement clickBtn = driver.findElement(KeywordDriven.findLocators());
-		clickBtn.click();
+		String actualValue = driver.findElement(KeywordDriven.findLocators()).getText();
+		Assert.assertEquals(actualValue, ExcelReader.dataColumnName);
+		logger.info("Assertion is done");
 	}
 	
 	/**
@@ -86,5 +107,6 @@ public class LoginOrangeHrm {
 			e.printStackTrace();
 		}
 		driver.quit();
+		logger.info("Browser closed");
 	}
 }

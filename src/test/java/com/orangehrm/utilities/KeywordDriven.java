@@ -34,6 +34,10 @@ public class KeywordDriven {
 		methods = methodKeyword.getClass().getMethods();
 	}
 	
+	/**
+	 * This Method checks matching of Keywords from excel and Keyword class and invoke the methods
+	 * @throws Exception
+	 */
 	public void executeKeywords() throws Exception {
 		
 		for (int i=0; i<methods.length;i++) {
@@ -43,6 +47,10 @@ public class KeywordDriven {
 		}
 	}
 	
+	/**
+	 * This Method takes locator type as input and based on that fetch value and return it
+	 * @return
+	 */
 	public static By findLocators() {
 		switch(ExcelReader.locatorName) {
 		case Constants.ID:

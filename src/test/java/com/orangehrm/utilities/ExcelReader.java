@@ -3,7 +3,6 @@ package com.orangehrm.utilities;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -56,5 +55,5 @@ public class ExcelReader {
 		dataColumnName = sheet.getRow(row).getCell(valueColumn).toString().trim();
 		return keywordColumnName;
 	}
-
 }
+
